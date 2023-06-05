@@ -1,5 +1,5 @@
 model_urls = {
-    "gpt4all-j-v1.3-groovy": "localhost:5051"
+    # "Model_name": "url access point"
 }
 
 gptmodels = ["gpt-3.5-turbo", "gpt-3.5-turbo-0301", "text-davinci-003"]

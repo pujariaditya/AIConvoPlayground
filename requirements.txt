@@ -1,0 +1,6 @@
+grpcio==1.54.2
+openai==0.27.7
+protobuf==4.23.2
+python-dotenv==1.0.0
+reportlab==4.0.4
+streamlit==1.22.0
