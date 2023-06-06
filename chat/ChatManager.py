@@ -23,7 +23,6 @@ class ChatManager:
                 last_message = ""
                 if len(self.chat_log) != 0:
                     last_message = self.chat_log[-1][-1]
-                # response = "response"
                 response = next_agent.generate_message(self.chat_log,last_message)
                 self.chat_log.append((next_agent.char_name, response))
                 self.display_chat(chat_container)

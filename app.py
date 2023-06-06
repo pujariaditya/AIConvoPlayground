@@ -140,7 +140,7 @@ def session_on_click():
 
     if len(selected_roles) < 1:
         st.warning("At least one agent is required to start the session.", icon="⚠️")
-    elif check_if_using_chatgpt_api() and not openai_utils.is_valid_openai_key(api_key):
+    elif check_if_using_chatgpt_api() and not openai_utils.is_valid_openai_key(st.session_state.api_key):
         st.error("Invalid API key.")
     elif not username:
         st.warning("Please enter your name.")
@@ -229,7 +229,6 @@ with character_settings:
 ########################################################################################################################
 # Streamlit Tab 2 Chat Window
 
-
 @st.cache_data
 def load_character_from_file(role):
     with open(f"{new_role_files_directory}/{role}.json", "r") as file:
@@ -255,7 +254,7 @@ def initialize_chat_system():
         example_dialogue = character['example_dialogue']
 
         selected_agents.append(
-            ChatAgent(char_name, char_persona, char_greeting, world_scenario, example_dialogue, models_available[0])
+            ChatAgent(char_name, char_persona, char_greeting, world_scenario, example_dialogue, selected_models[char_name])
         )
 
     return selected_agents
@@ -265,6 +264,10 @@ def chat_with_user(user_chat, response_agent):
     chat_manager.agents = initialize_chat_system()
     chat_manager.chat_log = st.session_state.chat_log
     next_agent = next((agent for agent in chat_manager.agents if agent.char_name == response_agent), None)
+    logger.error("---------------")
+    for agent in chat_manager.agents:
+        logger.error(agent.model_name)
+    logger.error("---------------")
     chat_manager.chat(user_message=user_chat, next_agent=next_agent, chat_container=chat_container, username=username)
 
 

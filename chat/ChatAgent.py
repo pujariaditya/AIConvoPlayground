@@ -52,16 +52,16 @@ class ChatAgent:
         payload = {
             "message": self.build_prompt_for(chat_history,user_message)
         }
-
         if self.model_name in gptmodels:
+            logger.error("GPT")
             response = openai.ChatCompletion.create(model=self.model_name, messages = [
             {"role": "user", "content": payload["message"]}
         ])
             return response['choices'][0]['message']['content']
         elif self.model_name in list(model_urls.keys()):
+            logger.error("CUSTOM MODEL")
             server_address = model_urls[self.model_name]
             client = ModelClient(server_address)
-            # client.generate_text()
             response = client.generate_text( payload["message"])
             return response if response else "Internal request failed"
         else:

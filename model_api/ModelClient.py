@@ -13,6 +13,5 @@ class ModelClient:
 
     def generate_text(self, message):
         request = model_pb2.TextGenerateRequest(message=message)
-        logger.error(message)
         response = self.stub.TextGenerate(request)
         return response.reply
